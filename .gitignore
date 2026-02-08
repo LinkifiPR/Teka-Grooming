@@ -17,3 +17,6 @@ build
 
 # typeScript
 *.tsbuildinfo
+
+# local raw media staging
+assets/gallery/raw/

@@ -274,14 +274,111 @@ h2 {
 }
 
 .gallery-shell {
+  position: relative;
   width: min(1240px, calc(100% - 2rem));
-  padding: 1.1rem;
-  border-radius: 26px;
-  border: 1px solid #ffd4a7;
+  padding: 1.4rem;
+  border-radius: 30px;
+  border: 1px solid #ffc98f;
   background:
-    radial-gradient(circle at 10% 8%, rgba(255, 255, 255, 0.64), transparent 40%),
-    linear-gradient(152deg, #ffefdc 0%, #ffe5c3 42%, #ffd7a8 100%);
-  box-shadow: var(--shadow);
+    radial-gradient(circle at 15% 4%, rgba(255, 255, 255, 0.78), transparent 33%),
+    radial-gradient(circle at 87% 9%, rgba(255, 238, 208, 0.88), transparent 34%),
+    linear-gradient(150deg, #fff2df 0%, #ffe2bf 52%, #ffd19a 100%);
+  box-shadow: 0 28px 70px rgba(79, 42, 8, 0.18);
+  overflow: visible;
+}
+
+.gallery-doodles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.doodle-bubble {
+  position: absolute;
+  margin: 0;
+  border: 2px solid #c17833;
+  border-radius: 999px;
+  background: rgba(255, 249, 239, 0.96);
+  color: #9a5f25;
+  padding: 0.26rem 0.72rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 18px rgba(84, 43, 7, 0.12);
+}
+
+.doodle-bubble-left {
+  top: -1rem;
+  left: 13.5rem;
+  transform: rotate(-7deg);
+}
+
+.doodle-bubble-right {
+  top: -0.95rem;
+  right: 6.8rem;
+  transform: rotate(8deg);
+}
+
+.doodle-arrow {
+  position: absolute;
+  width: 70px;
+  height: 36px;
+  border: 2px dashed #bd7b3e;
+  border-color: #bd7b3e transparent transparent transparent;
+  border-radius: 65% / 100%;
+}
+
+.doodle-arrow::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid #bd7b3e;
+  border-right: 2px solid #bd7b3e;
+  right: 0;
+  top: -2px;
+  transform: rotate(28deg);
+}
+
+.doodle-arrow-left {
+  left: 9rem;
+  top: 1.3rem;
+  transform: rotate(18deg);
+}
+
+.doodle-arrow-right {
+  right: 3rem;
+  top: 1.2rem;
+  transform: rotate(170deg);
+}
+
+.doodle-arrow-right::after {
+  right: auto;
+  left: 0;
+  transform: rotate(-152deg);
+}
+
+.doodle-squiggle {
+  position: absolute;
+  margin: 0;
+  color: #cb7f38;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+}
+
+.doodle-squiggle-left {
+  left: 1.2rem;
+  top: 4.35rem;
+  transform: rotate(-15deg);
+}
+
+.doodle-squiggle-right {
+  right: 1rem;
+  bottom: 1rem;
+  transform: rotate(22deg);
 }
 
 .gallery-head {
@@ -289,6 +386,8 @@ h2 {
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .gallery-total {
@@ -307,8 +406,10 @@ h2 {
 .results-layout {
   margin-top: 1.25rem;
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: 0.95rem;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 1.05rem;
+  position: relative;
+  z-index: 1;
 }
 
 .spotlight-card,
@@ -321,26 +422,31 @@ h2 {
 }
 
 .spotlight-card {
-  min-height: 700px;
+  min-height: 680px;
   border-radius: 24px;
-  border: 1px solid #f4d2ab;
-  background: #fff;
-  padding: 0.6rem;
+  border: 1px solid #f5cc9a;
+  background: linear-gradient(180deg, #fff 0%, #fff9ef 100%);
+  padding: 0.62rem;
 }
 
 .reel-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-auto-rows: 228px;
+  grid-auto-rows: 205px;
   gap: 0.95rem;
 }
 
 .reel-card {
-  min-height: 228px;
+  min-height: 205px;
   border-radius: 18px;
-  border: 1px solid #f4d2ab;
-  background: #fff;
+  border: 1px solid #f5cc9a;
+  background: linear-gradient(180deg, #fff 0%, #fff9ef 100%);
   padding: 0.45rem;
+}
+
+.reel-wide {
+  grid-column: 1 / -1;
+  min-height: 232px;
 }
 
 .spotlight-card video,
@@ -410,7 +516,6 @@ h2 {
   top: 1rem;
   font-size: 0.74rem;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
   border: 1px solid rgba(255, 255, 255, 0.42);
   border-radius: 999px;
   background: rgba(8, 6, 2, 0.24);
@@ -438,9 +543,9 @@ h2 {
   left: 0.95rem;
   bottom: 0.85rem;
   max-width: calc(100% - 3.6rem);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 .reel-index {
@@ -548,12 +653,26 @@ h2 {
 
   .gallery-shell {
     width: min(1240px, calc(100% - 1rem));
-    padding: 0.85rem;
+    padding: 1rem;
   }
 
   .gallery-head {
     align-items: start;
     flex-direction: column;
+  }
+
+  .doodle-bubble-left {
+    left: 10.7rem;
+  }
+
+  .doodle-bubble-right {
+    right: 1.5rem;
+  }
+
+  .doodle-arrow-left,
+  .doodle-arrow-right,
+  .doodle-squiggle {
+    display: none;
   }
 
   .results-layout {
@@ -566,13 +685,33 @@ h2 {
 
   .reel-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 250px;
+    grid-auto-rows: 220px;
   }
 }
 
 @media (max-width: 760px) {
+  .doodle-bubble-left,
+  .doodle-bubble-right {
+    top: -0.7rem;
+    font-size: 0.68rem;
+    padding: 0.22rem 0.55rem;
+  }
+
+  .doodle-bubble-left {
+    left: 0.8rem;
+  }
+
+  .doodle-bubble-right {
+    right: 0.8rem;
+  }
+
   .reel-grid {
     grid-template-columns: 1fr;
     grid-auto-rows: 270px;
+  }
+
+  .reel-wide {
+    grid-column: auto;
+    min-height: 270px;
   }
 }

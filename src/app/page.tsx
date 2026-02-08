@@ -9,6 +9,7 @@ type SiteCopy = {
   nav: {
     services: string;
     gallery: string;
+    photos: string;
     process: string;
     contact: string;
   };
@@ -17,6 +18,7 @@ type SiteCopy = {
     heading: string;
     description: string;
     primaryCta: string;
+    photoCta: string;
     secondaryCta: string;
     stats: Array<{ label: string; value: string }>;
   };
@@ -53,6 +55,7 @@ const copy: Record<Locale, SiteCopy> = {
     nav: {
       services: "บริการ",
       gallery: "ผลงาน",
+      photos: "ภาพถ่าย",
       process: "ขั้นตอน",
       contact: "ติดต่อ"
     },
@@ -62,6 +65,7 @@ const copy: Record<Locale, SiteCopy> = {
       description:
         "บริการอาบน้ำ ตัดแต่งขน ทำความสะอาดหู ตัดเล็บ และดูแลผิวหนังอย่างอ่อนโยน โดยทีมกรูมเมอร์ที่เชี่ยวชาญ",
       primaryCta: "จองคิวตอนนี้",
+      photoCta: "ดูภาพทั้งหมด",
       secondaryCta: "ดูผลงานจริง",
       stats: [
         { label: "ลูกค้าประจำ", value: "500+" },
@@ -91,7 +95,7 @@ const copy: Record<Locale, SiteCopy> = {
       title: "ผลงานจากลูกค้าจริง",
       intro: "วิดีโอจริงจากบริการของเรา",
       hoverHint: "เลื่อนเมาส์เพื่อเล่น",
-      totalLabel: "07 คลิป"
+      totalLabel: "06 คลิป"
     },
     process: {
       title: "ขั้นตอนบริการ",
@@ -126,6 +130,7 @@ const copy: Record<Locale, SiteCopy> = {
     nav: {
       services: "Services",
       gallery: "Gallery",
+      photos: "Photos",
       process: "Process",
       contact: "Contact"
     },
@@ -135,6 +140,7 @@ const copy: Record<Locale, SiteCopy> = {
       description:
         "Bath, trim, nail care, ear cleaning, and skin-friendly treatments by experienced groomers.",
       primaryCta: "Book Now",
+      photoCta: "See All Photos",
       secondaryCta: "View Gallery",
       stats: [
         { label: "Returning clients", value: "500+" },
@@ -164,7 +170,7 @@ const copy: Record<Locale, SiteCopy> = {
       title: "Real Client Results",
       intro: "Authentic service videos from our studio",
       hoverHint: "Hover to play",
-      totalLabel: "07 Clips"
+      totalLabel: "06 Clips"
     },
     process: {
       title: "How We Work",
@@ -240,7 +246,7 @@ const galleryClips: GalleryClip[] = [
 ];
 
 const heroVideo = galleryClips[0].src;
-const resultClips = galleryClips.slice(1);
+const resultClips = galleryClips.slice(1, 7);
 
 export default function HomePage() {
   const [locale, setLocale] = useState<Locale>("th");
@@ -286,6 +292,7 @@ export default function HomePage() {
           <nav className="main-nav" aria-label="Primary Navigation">
             <a href="#services">{t.nav.services}</a>
             <a href="#gallery">{t.nav.gallery}</a>
+            <a href="/gallery">{t.nav.photos}</a>
             <a href="#process">{t.nav.process}</a>
             <a href="#contact">{t.nav.contact}</a>
           </nav>
@@ -330,6 +337,9 @@ export default function HomePage() {
                 <a className="btn-primary" href="#contact">
                   {t.hero.primaryCta}
                 </a>
+                <a className="btn-secondary" href="/gallery">
+                  {t.hero.photoCta}
+                </a>
                 <a className="btn-secondary" href="#gallery">
                   {t.hero.secondaryCta}
                 </a>
@@ -369,6 +379,15 @@ export default function HomePage() {
 
         <section id="gallery" className="section gallery">
           <div className="container gallery-shell">
+            <div className="gallery-doodles" aria-hidden="true">
+              <p className="doodle-bubble doodle-bubble-left">{locale === "th" ? "โฮ่ง โฮ่ง!" : "woof woof!"}</p>
+              <p className="doodle-bubble doodle-bubble-right">{locale === "th" ? "น่ารักสุดๆ" : "paw-fect!"}</p>
+              <span className="doodle-arrow doodle-arrow-left" />
+              <span className="doodle-arrow doodle-arrow-right" />
+              <span className="doodle-squiggle doodle-squiggle-left">~ ~ ~</span>
+              <span className="doodle-squiggle doodle-squiggle-right">~ ~ ~</span>
+            </div>
+
             <div className="gallery-head">
               <div>
                 <h2>{t.gallery.title}</h2>
@@ -391,14 +410,14 @@ export default function HomePage() {
                 </video>
                 <p className="gallery-chip">{t.gallery.hoverHint}</p>
                 <p className="spotlight-title">{locale === "th" ? spotlightClip.title.th : spotlightClip.title.en}</p>
-                <p className="spotlight-index">01 / 07</p>
+                <p className="spotlight-index">01 / 06</p>
               </article>
 
               <div className="reel-grid">
                 {reelClips.map((clip, index) => (
                   <article
                     key={clip.src}
-                    className="reel-card"
+                    className={`reel-card ${index === 0 ? "reel-wide" : ""}`}
                     onMouseEnter={(event) => previewVideo(event.currentTarget)}
                     onMouseLeave={(event) => stopPreview(event.currentTarget)}
                     onFocus={(event) => previewVideo(event.currentTarget)}
