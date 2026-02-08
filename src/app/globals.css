@@ -73,13 +73,41 @@ a {
   color: var(--ink);
 }
 
-.lang-toggle {
-  border: 1px solid var(--line);
-  background: #fff;
-  padding: 0.5rem 0.8rem;
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem;
   border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.lang-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  min-height: 34px;
+  border-radius: 999px;
+  padding: 0 0.65rem;
+  font-size: 0.82rem;
   font-weight: 700;
+  letter-spacing: 0.02em;
   cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.lang-option.active {
+  background: linear-gradient(90deg, #ffe0ba 0%, #ffd19c 100%);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px #ffc48c;
+}
+
+.lang-option:hover {
+  color: var(--ink);
 }
 
 .hero {
@@ -149,8 +177,7 @@ h1 {
 }
 
 .btn-primary:hover,
-.btn-secondary:hover,
-.lang-toggle:hover {
+.btn-secondary:hover {
   transform: translateY(-2px);
 }
 

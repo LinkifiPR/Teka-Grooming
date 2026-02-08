@@ -44,7 +44,6 @@ type SiteCopy = {
     hoursValue: string;
   };
   footer: string;
-  languageToggle: string;
 };
 
 const copy: Record<Locale, SiteCopy> = {
@@ -118,8 +117,7 @@ const copy: Record<Locale, SiteCopy> = {
       hoursLabel: "เวลาเปิดทำการ",
       hoursValue: "ทุกวัน 09:00 - 19:00"
     },
-    footer: "Teka Grooming - Dog Grooming Studio",
-    languageToggle: "EN"
+    footer: "Teka Grooming - สตูดิโอดูแลขนสุนัข"
   },
   en: {
     brand: "Teka Grooming",
@@ -191,8 +189,7 @@ const copy: Record<Locale, SiteCopy> = {
       hoursLabel: "Opening Hours",
       hoursValue: "Daily 09:00 - 19:00"
     },
-    footer: "Teka Grooming - Dog Grooming Studio",
-    languageToggle: "TH"
+    footer: "Teka Grooming - Dog Grooming Studio"
   }
 };
 
@@ -260,10 +257,6 @@ export default function HomePage() {
 
   const t = useMemo(() => copy[locale], [locale]);
 
-  const switchLanguage = () => {
-    setLocale((current) => (current === "th" ? "en" : "th"));
-  };
-
   const previewVideo = (node: HTMLElement) => {
     const video = node.querySelector("video");
 
@@ -301,9 +294,26 @@ export default function HomePage() {
             <a href="#contact">{t.nav.contact}</a>
           </nav>
 
-          <button className="lang-toggle" type="button" onClick={switchLanguage}>
-            {t.languageToggle}
-          </button>
+          <div className="lang-switch" role="group" aria-label="Language Switch">
+            <button
+              className={`lang-option ${locale === "th" ? "active" : ""}`}
+              type="button"
+              onClick={() => setLocale("th")}
+              aria-pressed={locale === "th"}
+            >
+              <span aria-hidden="true">🇹🇭</span>
+              <span>TH</span>
+            </button>
+            <button
+              className={`lang-option ${locale === "en" ? "active" : ""}`}
+              type="button"
+              onClick={() => setLocale("en")}
+              aria-pressed={locale === "en"}
+            >
+              <span aria-hidden="true">🇬🇧</span>
+              <span>EN</span>
+            </button>
+          </div>
         </div>
       </header>
 
