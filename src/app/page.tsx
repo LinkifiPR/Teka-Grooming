@@ -29,6 +29,7 @@ type SiteCopy = {
     title: string;
     intro: string;
     hoverHint: string;
+    totalLabel: string;
   };
   process: {
     title: string;
@@ -89,7 +90,8 @@ const copy: Record<Locale, SiteCopy> = {
     gallery: {
       title: "ผลงานจากลูกค้าจริง",
       intro: "วิดีโอจริงจากบริการของเรา",
-      hoverHint: "เลื่อนเมาส์เพื่อเล่น"
+      hoverHint: "เลื่อนเมาส์เพื่อเล่น",
+      totalLabel: "07 คลิป"
     },
     process: {
       title: "ขั้นตอนบริการ",
@@ -161,7 +163,8 @@ const copy: Record<Locale, SiteCopy> = {
     gallery: {
       title: "Real Client Results",
       intro: "Authentic service videos from our studio",
-      hoverHint: "Hover to play"
+      hoverHint: "Hover to play",
+      totalLabel: "07 Clips"
     },
     process: {
       title: "How We Work",
@@ -237,25 +240,18 @@ const galleryClips: GalleryClip[] = [
 ];
 
 const heroVideo = galleryClips[0].src;
-const galleryTileClasses = ["tile-a", "tile-b", "tile-c", "tile-d", "tile-e", "tile-f", "tile-g", "tile-h"];
+const resultClips = galleryClips.slice(1);
 
 export default function HomePage() {
   const [locale, setLocale] = useState<Locale>("th");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("site-locale");
-
-    if (stored === "th" || stored === "en") {
-      setLocale(stored);
-    }
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("site-locale", locale);
     document.documentElement.lang = locale;
   }, [locale]);
 
   const t = useMemo(() => copy[locale], [locale]);
+  const spotlightClip = resultClips[0] ?? galleryClips[0];
+  const reelClips = resultClips.slice(1);
 
   const previewVideo = (node: HTMLElement) => {
     const video = node.querySelector("video");
@@ -294,26 +290,21 @@ export default function HomePage() {
             <a href="#contact">{t.nav.contact}</a>
           </nav>
 
-          <div className="lang-switch" role="group" aria-label="Language Switch">
-            <button
-              className={`lang-option ${locale === "th" ? "active" : ""}`}
-              type="button"
-              onClick={() => setLocale("th")}
-              aria-pressed={locale === "th"}
-            >
+          <button
+            className="lang-toggle"
+            type="button"
+            onClick={() => setLocale((current) => (current === "th" ? "en" : "th"))}
+            aria-label={locale === "th" ? "Switch language to English" : "เปลี่ยนภาษาเป็นไทย"}
+          >
+            <span className={`toggle-chip ${locale === "th" ? "active" : ""}`}>
               <span aria-hidden="true">🇹🇭</span>
               <span>TH</span>
-            </button>
-            <button
-              className={`lang-option ${locale === "en" ? "active" : ""}`}
-              type="button"
-              onClick={() => setLocale("en")}
-              aria-pressed={locale === "en"}
-            >
+            </span>
+            <span className={`toggle-chip ${locale === "en" ? "active" : ""}`}>
               <span aria-hidden="true">🇬🇧</span>
               <span>EN</span>
-            </button>
-          </div>
+            </span>
+          </button>
         </div>
       </header>
 
@@ -366,28 +357,52 @@ export default function HomePage() {
         </section>
 
         <section id="gallery" className="section gallery">
-          <div className="container">
-            <h2>{t.gallery.title}</h2>
-            <p className="section-intro">{t.gallery.intro}</p>
-            <div className="gallery-grid">
-              {galleryClips.map((clip, index) => (
-                <article
-                  key={clip.src}
-                  className={`gallery-item ${galleryTileClasses[index]}`}
-                  onMouseEnter={(event) => previewVideo(event.currentTarget)}
-                  onMouseLeave={(event) => stopPreview(event.currentTarget)}
-                  onFocus={(event) => previewVideo(event.currentTarget)}
-                  onBlur={(event) => stopPreview(event.currentTarget)}
-                  tabIndex={0}
-                >
-                  <video muted loop playsInline preload="metadata">
-                    <source src={clip.src} type="video/mp4" />
-                  </video>
-                  <p className="gallery-chip">{t.gallery.hoverHint}</p>
-                  <p className="gallery-title">{locale === "th" ? clip.title.th : clip.title.en}</p>
-                  <p className="gallery-index">0{index + 1}</p>
-                </article>
-              ))}
+          <div className="container gallery-shell">
+            <div className="gallery-head">
+              <div>
+                <h2>{t.gallery.title}</h2>
+                <p className="section-intro">{t.gallery.intro}</p>
+              </div>
+              <p className="gallery-total">{t.gallery.totalLabel}</p>
+            </div>
+
+            <div className="results-layout">
+              <article
+                className="spotlight-card"
+                onMouseEnter={(event) => previewVideo(event.currentTarget)}
+                onMouseLeave={(event) => stopPreview(event.currentTarget)}
+                onFocus={(event) => previewVideo(event.currentTarget)}
+                onBlur={(event) => stopPreview(event.currentTarget)}
+                tabIndex={0}
+              >
+                <video muted loop playsInline preload="metadata">
+                  <source src={spotlightClip.src} type="video/mp4" />
+                </video>
+                <p className="gallery-chip">{t.gallery.hoverHint}</p>
+                <p className="spotlight-title">{locale === "th" ? spotlightClip.title.th : spotlightClip.title.en}</p>
+                <p className="spotlight-index">01 / 07</p>
+              </article>
+
+              <div className="reel-grid">
+                {reelClips.map((clip, index) => (
+                  <article
+                    key={clip.src}
+                    className="reel-card"
+                    onMouseEnter={(event) => previewVideo(event.currentTarget)}
+                    onMouseLeave={(event) => stopPreview(event.currentTarget)}
+                    onFocus={(event) => previewVideo(event.currentTarget)}
+                    onBlur={(event) => stopPreview(event.currentTarget)}
+                    tabIndex={0}
+                  >
+                    <video muted loop playsInline preload="metadata">
+                      <source src={clip.src} type="video/mp4" />
+                    </video>
+                    <p className="gallery-chip">{t.gallery.hoverHint}</p>
+                    <p className="reel-title">{locale === "th" ? clip.title.th : clip.title.en}</p>
+                    <p className="reel-index">{String(index + 2).padStart(2, "0")}</p>
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
         </section>
