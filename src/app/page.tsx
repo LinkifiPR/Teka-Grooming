@@ -290,21 +290,32 @@ export default function HomePage() {
             <a href="#contact">{t.nav.contact}</a>
           </nav>
 
-          <button
-            className="lang-toggle"
-            type="button"
-            onClick={() => setLocale((current) => (current === "th" ? "en" : "th"))}
-            aria-label={locale === "th" ? "Switch language to English" : "เปลี่ยนภาษาเป็นไทย"}
-          >
-            <span className={`toggle-chip ${locale === "th" ? "active" : ""}`}>
-              <span aria-hidden="true">🇹🇭</span>
-              <span>TH</span>
-            </span>
-            <span className={`toggle-chip ${locale === "en" ? "active" : ""}`}>
-              <span aria-hidden="true">🇬🇧</span>
-              <span>EN</span>
-            </span>
-          </button>
+          <div className="lang-toggle" role="group" aria-label="Language switcher">
+            <button
+              className={`toggle-chip-btn ${locale === "th" ? "active" : ""}`}
+              type="button"
+              onClick={() => setLocale("th")}
+              aria-pressed={locale === "th"}
+              aria-label="ภาษาไทย"
+            >
+              <span className="toggle-chip">
+                <span aria-hidden="true">🇹🇭</span>
+                <span>TH</span>
+              </span>
+            </button>
+            <button
+              className={`toggle-chip-btn ${locale === "en" ? "active" : ""}`}
+              type="button"
+              onClick={() => setLocale("en")}
+              aria-pressed={locale === "en"}
+              aria-label="English"
+            >
+              <span className="toggle-chip">
+                <span aria-hidden="true">🇬🇧</span>
+                <span>EN</span>
+              </span>
+            </button>
+          </div>
         </div>
       </header>
 

@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/"
+  },
+  other: {
+    google: "notranslate"
   }
 };
 
@@ -25,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th">
+    <html lang="th" translate="no" className="notranslate">
       <body>{children}</body>
     </html>
   );
